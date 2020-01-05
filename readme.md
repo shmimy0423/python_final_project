@@ -2,7 +2,7 @@
 ===========================
 姓名  |  学号 |项目URL |合作搭档
 ---  |  --- | --- | --- |
-张铭睿  |  181013108 | https |曾拱韬 钟振升
+张铭睿  |  181013108 | http://zhangmingrui.pythonanywhere.com/query |曾拱韬 钟振升
 
 ![girl power.png](https://i.loli.net/2020/01/05/eObCn7V1mLfPGFt.png)
 
