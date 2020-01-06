@@ -1,0 +1,89 @@
+{% extends 'base.html' %} #这个模板继承了基模板，为名为"body"的块提供了一个替代块
+
+{% block body %}
+<!-- <div class="page__hero--overlay" style="background-color: #5e616c; background-image: url('/minimal-mistakes/images/header.jpg');">
+      <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">        
+          Lenny的BLOG        
+      </h1>
+			  <p class="page__lead">我思故我在</p>
+       
+    </div>
+</div> -->
+<h1 align="center">{{ the_title }}</h1>
+
+<div align="center">
+<br>
+<tr><td><form method="POST" action="/qw">
+    <select name="the_region_selected1">
+        {% for item in the_select_region1 %}
+            <option value="{{ item }}">{{ item }}</option>
+        {% endfor %}
+    </select></td>
+<td><p><input value='切换' type='SUBMIT'></p></tr></table>
+<br>
+{{ the_result|safe }}
+<br>
+{{ the_result1|safe }}
+<br>
+{{ the_result2|safe }}
+<br>
+{{ the_result3|safe }}
+<br>
+{{ the_result4|safe }}
+<br>
+{{ the_result5|safe }}
+<br>
+<h4>国家议会女性人数占比（%）</h4>
+<form method="POST" action="/meeting">
+    <select name="the_region_selected">
+        {% for item in the_select_region %}
+            <option value="{{ item }}">{{ item }}</option>
+        {% endfor %}
+    </select>
+<p><input value='Do it!' type='SUBMIT'></p>
+</form>
+{{ the_plot_all|safe }}
+{{ the_res|safe }}
+<br>
+<h4>中小学女生与男生的入学比例（%）</h4>
+<form method="POST" action="/female">
+    <select name="the_region_selected">
+        {% for item in the_select_region %}
+            <option value="{{ item }}">{{ item }}</option>
+        {% endfor %}
+    </select>
+<p><input value='Do it!' type='SUBMIT'></p>
+</form>
+
+{{ the_plot_all|safe }}
+{{ the_res1|safe }}
+
+{{ the_plot_all1|safe }}
+{{ the_res2|safe }}
+
+<br>
+<h4>就业、教育、政治、个人满足交叉表（DASH）</h4>	
+<form method='GET' action='/dash'>
+<p><input value='DASH仪表盘' type='SUBMIT'></p>
+</form>
+	
+<form method='POST' action='/Match_analysis'>
+<p><input value='赛事分析' type='SUBMIT'></p>
+</form>
+	
+<form method='POST' action='/Competition_news'>
+<p><input value='赛事新闻' type='SUBMIT'></p>
+</form>
+	
+<form method='POST' action='/Top_scorer'>
+<p><input value='射手榜' type='SUBMIT'></p>
+</form>
+</div>	
+
+<hr>
+                
+</hr>
+
+{% endblock %}
+

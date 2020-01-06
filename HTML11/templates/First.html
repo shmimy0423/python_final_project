@@ -1,0 +1,488 @@
+{% extends 'base.html' %} #这个模板继承了基模板，为名为"body"的块提供了一个替代块
+
+{% block body %}
+<!-- <div class="page__hero--overlay" style="background-color: #5e616c; background-image: url('/minimal-mistakes/images/header.jpg');">
+      <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">        
+          Lenny的BLOG        
+      </h1>
+			  <p class="page__lead">我思故我在</p>
+       
+    </div>
+</div> -->
+<h1 align="center">{{ the_title }}</h1>
+<div class="note-view1"><h3 class="line" data-line="0">故事背景</h3>
+<p class="line" data-line="2">目前，虽然世界在性别平权方面取得了一定进展，但不同地区与领域在性别差距上仍存在不同程度的差异。</p>
+<p class="line" data-line="4">这个数据可视化项目主要目的是为了展示当前男女间在<strong>经济地位、学习机会、政治参与及医疗与生存</strong>四个范畴中的差距</p>
+<p class="line" data-line="6">以实现<strong>在不同领域为女性赋权，针对性地提升女性权利，收窄男女间的差距。</strong></p>
+</div>
+
+    <style>
+			* {
+				margin: 0px;
+				padding: 0px;
+			}
+
+			.clearfix:after {
+				content: " ";
+				display: block;
+				clear: both;
+			}
+
+			.box {
+				position: relative;
+				width: 800px;
+				height: 300px;
+				margin: 100px auto;
+			}
+
+			.main {
+				width: 800px;
+				height: 300px;
+				position: absolute;
+				top: 0px;
+				left: 50%;
+				margin-left: -350px;
+				overflow: hidden;
+			}
+
+			.item {
+				list-style: none;
+				width: 400px;
+				height: 230px;
+				position: absolute;
+				left: 0px;
+				top: 27px;
+				transition: all 0.3s ease;
+			}
+
+			.p0 {
+				transform: translate3d(-400px, 0, 0) scale(1);
+				opacity: 0.1;
+				z-index: 1;
+			}
+
+			.p1 {
+				transform: translate3d(0px, 0, 0) scale(1);
+				opacity: 0.8;
+				z-index: 2;
+			}
+
+			.p2 {
+				transform: translate3d(400px, 0, 0) scale(1);
+				opacity: 0.8;
+				z-index: 3;
+			}
+
+			.p3 {
+				transform: translate3d(200px, 0, 0) scale(1.5);
+				opacity: 1;
+				z-index: 4;
+			}
+
+			.p4 {
+				transform: translate3d(800px, 0, 0) scale(1);
+				opacity: 0.1;
+				z-index: 3;
+			}
+
+			.newItem {
+				position: absolute;
+				left: 0px;
+				top: 0px;
+			}
+
+			.changeItem {
+				position: absolute;
+				left: 50%;
+				top: 0px;
+				margin-left: -202px;
+				transform: scale(1.4);
+			}
+
+			.item img {
+				width: 100%;
+				height: 100%;
+			}
+
+			.btnMain {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				top: 0px;
+				left: 0px;
+			}
+
+			.left {
+				position: absolute;
+				left: 15px;
+				top: 50%;
+				margin-top: -15px;
+				z-index: 10;
+			}
+
+			.right {
+				position: absolute;
+				right: 15px;
+				top: 50%;
+				margin-top: -15px;
+				z-index: 10;
+			}
+
+			.left img,
+			.right img {
+				width: 30px;
+				height: 30px;
+			}
+
+			.pressMain {
+				position: absolute;
+				left: 50%;
+				bottom: 10px;
+				width: 134px;
+				height: 24px;
+				margin-left: -37px;
+				z-index: 20;
+			}
+
+			.pressMain span {
+	display: inline-block;
+	margin: 2px 3px;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	color: #fff;
+	background-color: rgba(255,255,255,0.53);
+	text-align: center;
+	line-height: 20px;
+			}
+
+			.pressMain .active {
+				background: brown;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<div class="box">
+				<!--<button @click="imgMove">点击</button>-->
+				<div class="main clearfix" @mouseover="btnOpen" @mouseout="btnHide">
+					<div class="minMain">
+						<div class="item" v-for="(item,index) in list" :key="index">
+							<img :src="item.imgUrl" />
+						</div>
+					</div>
+					<div class="btnMain" v-show="btnShow">
+						<div class="left" @click="leftClick">
+							<img src="static/img/ljiantou.png" />
+						</div>
+						<div class="right" @click="rightClick">
+							<img src="static/img/rjiantou.png" />
+						</div>
+					</div>
+					<div class="pressMain">
+						<span v-for="(item,index) in pressList" :class="{active:item.isShow}"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		var app = new Vue({
+			el: "#app",
+			data() {
+				return {
+					list: [
+						{ imgUrl: 'https://img03.sogoucdn.com/net/a/04/link?url=https%3A%2F%2Fi01piccdn.sogoucdn.com%2Fb45a48addbf8985c&appid=122' },
+						{ imgUrl: 'https://i01piccdn.sogoucdn.com/aeff91a79fe7d1e1' },
+						{ imgUrl: 'https://i03piccdn.sogoucdn.com/9eb47ff014e58edb' },
+						{ imgUrl: 'https://i04piccdn.sogoucdn.com/5342f410d07b6ecc' },
+						{ imgUrl: 'https://i03piccdn.sogoucdn.com/f315f98a573a166c' }
+					],
+					pressList: [{ name: '1', isShow: false }, { name: '2', isShow: false }, { name: '3', isShow: false }, { name: '4', isShow: false }, { name: '5', isShow: false }],
+					numList: ['p0', 'p1', 'p2', 'p3', 'p4'],
+					imgIndex: 0,
+					imgTimer: null,
+					btnShow: false
+				}
+			},
+			mounted: function() {
+				var Item = document.getElementsByClassName('item');
+				for(var i = 0; i < Item.length; i++) {
+					Item[i].className = 'item ' + this.numList[i]
+				}
+				this.imgMove()
+				this.pressList[0].isShow = true
+			},
+			methods: {
+
+				imgMove() {
+					var Item = document.getElementsByClassName('item');
+					this.imgTimer = setInterval(() => {
+						this.numList.push(this.numList[0]);
+						this.numList.shift()
+						this.imgIndex++;
+						for(var i = 0; i < Item.length; i++) {
+							Item[i].className = 'item ' + this.numList[i];
+						}
+						for(var i in this.pressList) {
+							this.pressList[i].isShow = false
+						}
+						if(this.imgIndex > 4) {
+							this.imgIndex = 0
+							this.pressList[this.imgIndex].isShow = true;
+						} else {
+							this.pressList[this.imgIndex].isShow = true;
+						}
+					}, 15000)
+				},
+				btnOpen() {
+					this.btnShow = true;
+					clearInterval(this.imgTimer)
+				},
+				btnHide() {
+					this.btnShow = false;
+					this.imgMove()
+				},
+				leftClick() {
+					var Item = document.getElementsByClassName('item');
+					this.numList.unshift(this.numList[4]);
+					this.numList.pop()
+					for(var i = 0; i < Item.length; i++) {
+						Item[i].className = 'item ' + this.numList[i];
+					}
+					for(var i in this.pressList) {
+						this.pressList[i].isShow = false
+					}
+					this.imgIndex--
+						if(this.imgIndex < 0) {
+							this.imgIndex = 4
+							this.pressList[this.imgIndex].isShow = true;
+						} else {
+							this.pressList[this.imgIndex].isShow = true;
+						}
+				},
+				rightClick() {
+					var Item = document.getElementsByClassName('item');
+					this.numList.push(this.numList[0]);
+					this.numList.shift()
+					for(var i = 0; i < Item.length; i++) {
+						Item[i].className = 'item ' + this.numList[i];
+					}
+					for(var i in this.pressList) {
+						this.pressList[i].isShow = false
+					}
+					this.imgIndex++
+					if(this.imgIndex > 4) {
+						this.imgIndex = 0
+						this.pressList[this.imgIndex].isShow = true;
+					} else {
+						this.pressList[this.imgIndex].isShow = true;
+					}
+				}
+			}
+		})
+	</script>
+
+
+
+<div align="center">
+<br>
+<tr><td><form method="POST" action="/query">
+    <select name="the_region_selected1">
+        {% for item in the_select_region1 %}
+            <option value="{{ item }}">{{ item }}</option>
+        {% endfor %}
+    </select></td>
+<td><p><input value='切换' type='SUBMIT'></p></tr></table>
+</form>
+<br>
+{{ the_result|safe }}
+<br>
+{{ the_res|safe }}
+<br>
+{{ the_result1|safe }}
+<br>
+{{ the_result2|safe }}
+<br>
+{{ the_result3|safe }}
+
+
+<h4>国家议会女性人数占比（%）</h4>
+<form method="POST" action="/meeting">
+    <select name="the_region_selected">
+        {% for item in the_select_region %}
+            <option value="{{ item }}">{{ item }}</option>
+        {% endfor %}
+    </select>
+<p><input value='Do it!' type='SUBMIT'></p>
+</form>
+{{ the_plot_all|safe }}
+
+<br>
+<h4>中小学女生与男生的入学比例（%）</h4>
+<form method="POST" action="/female">
+    <select name="the_region_selected">
+        {% for item in the_select_region %}
+            <option value="{{ item }}">{{ item }}</option>
+        {% endfor %}
+    </select>
+<p><input value='Do it!' type='SUBMIT'></p>
+</form>
+
+{{ the_res1|safe }}
+
+{{ the_plot_all1|safe }}
+{{ the_res2|safe }}
+
+<br>
+<h2>就业、教育、政治、计划生育叉表（DASH）</h2>	
+<form method='GET' action='/dash'>
+<p>><input value='DASH仪表盘' type='SUBMIT'></p>
+</form>
+	
+<!-- <form method='POST' action='/Match_analysis'>
+<p><input value='赛事分析' type='SUBMIT'></p>
+</form>
+	
+<form method='POST' action='/Competition_news'>
+<p><input value='赛事新闻' type='SUBMIT'></p>
+</form>
+	
+<form method='POST' action='/Top_scorer'>
+<p><input value='射手榜' type='SUBMIT'></p>
+</form> -->
+</div>	
+
+      <header class="header"></header>
+        <meta charset="utf-8">
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+        <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+        <meta name="format-detection" content="email=no"/>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="renderer" content="webkit">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+    	<title>[项目]Welcome to you！   -篮球/足球</title>
+        
+        <article class="container">
+            <section " class="side">
+                <!-- 个人肖像 -->
+<!--                <section align="center" class="me">
+                <h4 class="name">担任管理或领导职位的女性比例长期偏低</h4>
+				<p>由图可以看出，欧国国家的女性享受着较高的女性权利，包括受教育权与参政议事的权利</p>
+				<ul>
+				<li>欧美国家的女性参政议事的比例大大高于亚洲国家。</li>
+				<li>东亚国家的女性受教育比例较高，但是女性参政的比例相对较低</li>
+				<li>非洲国家和中东国家的参政与受教育率都较低</li>
+				<li>欧洲的女性在民主政治上面临更小的性别阻碍，能更积极表现</li>
+				</ul>
+				</div>
+                </section> -->
+				<div class="note-view _3Hc8o"><h2 class="line" data-line="0">领域对比</h2>
+				<h4 class="line" data-line="1">政治参与</h4>
+				<ul>
+				<li>从政女性数量的大幅增加，但从比例上来看女性还是大大低于男性。</li>
+				<li>东亚和太平洋地区在政治赋权方面性别差距继续扩大。</li>
+				<li>在追求性别平等的过程中，北欧国家继续领先世界。西欧的西班牙、非洲的埃塞俄比亚、拉丁美洲的墨西哥和东欧以及中亚地区的格鲁吉亚。这些国家在政治赋权方面有很大进步。</li>
+				</ul>
+				<h4 class="line" data-line="5">就业</h4>
+				<ul>
+				<li>括担任管理或领导职位的女性比例长期偏低，女性仍然未能获得与男性同等的就业机会</li>
+				</ul>
+				<h4 class="line" data-line="7">医疗与健康</h4>
+				<ul>
+				<li>越来越多地女性可以使用现代方法满足计划生育的需要，而不是因为恶劣的医疗卫生环境导致孕产妇死亡</li>
+				</ul>
+				<h4 class="line" data-line="9">教育</h4>
+				<p class="line" data-line="10">东欧和中亚地区地区已经消除了教育领域的性别差距。</p>
+				</div>
+
+                <!-- 基本信息 -->
+                <section class="info-unit">
+                    <h3><i class="fa fa-drivers-license-o" aria-hidden="true"></i>基本信息</h3>
+                    <hr/>
+                    <ul>
+                        <li>
+                            <span>1.参与经济事务和就业机会（Economic participation andopportunity）；</span>							
+                        </li>
+                        <li>
+                            <span>2.接受教育（Educationalattainment）; </span>
+                        </li>
+                        <li>
+                            <span>3. 健康与生存（Healthand survival）;</span>
+                        </li>
+						<li>						    
+						<span>4. 政治赋权/女性的政治势力（Political empowerment）。</span>
+						</li>
+                    </ul>
+                </section>
+
+                <!-- 联系方式 -->
+                <!-- <section class="contact info-unit">
+                    <h2><i class="fa fa-fax" aria-hidden="true"></i>联系方式</h2>
+                    <hr/>
+                    <ul>
+                        <li><label>手机</label><a href="tel:134-3536-4720" target="_blank">13435364720</a></li>
+                        <li><label>邮箱</label><a href="1198851307@qq.com" target="_blank">1198851307@qq.com</a></li>
+                        <li><label>个人主页</label><a href="http://e.nfu.edu.cn/course/view.php?id=14" target="_blank">e.nfu.edu.cn</a></li>
+                        <li><label>Github</label><a href="https://github.com/0b11111110" target="_blank">github.com/NFUNM058</a></li>
+                    </ul>
+                </section> -->
+				<div class="note-view"><h3 class="line" data-line="0">数据故事</h3>
+				<p class="line" data-line="1">由图可以看出，欧国国家的女性享受着较高的女性权利，包括受教育权与参政议事的权利</p>
+				<ul>
+				<li>在追求性别平等的过程中，北欧国家继续领先世界。西欧的西班牙、非洲的埃塞俄比亚、拉丁美洲的墨西哥和东欧以及中亚地区的格鲁吉亚。这些国家在政治赋权方面有很大进步。</li>
+				<li>欧美国家的女性参政议事的比例大大高于亚洲国家。</li>
+				<li>东亚国家的女性受教育比例较高，但是女性参政的比例相对较低</li>
+				<li>非洲国家和中东国家的参政与受教育率都较低</li>
+				<li>欧洲的女性在民主政治上面临更小的性别阻碍，能更积极表现</li>
+				</ul>
+				</div>
+                <!-- 技能点 -->
+                <section class="skill info-unit">
+                    <h3><i class="fa fa-code" aria-hidden="true"></i>综合评分</h3>
+                    <hr/>
+                    <ul>
+                        <li><label>参与经济事务和就业机会</label><progress value="57" max="100"></progress></li>
+                        <li><label>接受教育</label><progress value="75" max="100"></progress></li>
+                        <li><label>健康与生存</label><progress value="75" max="100"></progress></li>
+                        <li><label>政治赋权</label><progress value="85" max="100"></progress></li>
+                        
+                    </ul>
+                </section>
+
+                <!-- 技术栈 -->
+                <!-- <div class="stack info-unit">
+                    <h2><i class="fa fa-code" aria-hidden="true"></i>其他</h2>
+                    <hr/>
+                    <ul>
+                        <li>
+                            <label>前端</label>
+                            <span>React、jQuery、微信小程序、Bootstrap、SASS、LESS</span>
+                        </li>
+                        <li>
+                            <label>后端</label>
+                            <span>Node.js、MySQL、MongoDB、WordPress、ThinkPHP</span>
+                        </li>
+                        <li>
+                            <label>其他</label>
+                            <span>Git、SVN、Markdown</span>
+                        </li>
+                    </ul>
+                </div> -->
+            </section>
+
+            <section class="main">
+<hr>
+                
+</hr>
+
+{% endblock %}
+
